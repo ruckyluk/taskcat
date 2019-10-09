@@ -1,21 +1,66 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Description: 'This templete help you deploy single instance with WordPress.'
+
+Metadata: 
+  AWS::CloudFormation::Interface: 
+    ParameterGroups: 
+      - 
+        Label: 
+          default: "EC2 instace configuration"
+        Parameters: 
+          - ServerName
+          - InstanceType
+          - AmiId
+      - 
+        Label: 
+          default: "Network and Access setup"
+        Parameters: 
+          - AvailabilityZones
+          - KeyName
+
 Parameters:
     ServerName:
         Type: String
         Description: The name of your server
-        Default: rucky-demo2
-
+        MinLength: '4'
+        MaxLength: '20'
+        AllowedPattern: '[a-zA-Z][a-zA-Z0-9]*'
+        ConstraintDescription: must begin with a letter and contain only alphanumeric characters with minumum legth 4 and maximum 18 characters.
+    InstanceType:
+        Description: 'Apache WebServer EC2 instance'
+        Type: String
+        AllowedValues: 
+        - t2.micro
+        - t2.small
+        - t2.medium
+    KeyName:
+        Description: 'Access key name'
+        Type: 'AWS::EC2::KeyPair::KeyName'
+    AvailabilityZones:
+        Description: 'Availability Zones for instances'
+        Type: AWS::EC2::AvailabilityZone::Name
+    AmiId:
+        Description: 'AMI for the EC2 Instance'
+        Type: 'AWS::EC2::Image::Id'
+        Default: ami-0810ee98967166c7d
 
 Resources:
   EC2instance:
     Type: 'AWS::EC2::Instance'
     Properties:
-      ImageId: ami-0810ee98967166c7d
-      InstanceType: t2.micro
-      KeyName: lukasrucky
+      ImageId: !Ref AmiId
+      InstanceType: !Ref InstanceType
       SecurityGroupIds:
         - sg-5d011027
-      AvailabilityZone: us-east-1a
+      KeyName: !Ref KeyName
+      AvailabilityZone: !Ref AvailabilityZones
       Tags:
         - 
             Key: Name
             Value: !Ref ServerName
+            
+Outputs:
+  PublicIp:
+    Description: Server Public IP
+    Value: !GetAtt EC2instance.PublicIp

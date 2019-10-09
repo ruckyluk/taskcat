@@ -4,7 +4,7 @@
         "ParameterValue": "$[taskcat_random-string]"
 }, {
         "ParameterKey": "InstanceType",
-        "ParameterValue": "t2.micro"
+        "ParameterValue": "t2.medium"
 }, {
         "ParameterKey": "AvailabilityZones",
         "ParameterValue": "$[taskcat_getaz_1]"
