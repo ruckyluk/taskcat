@@ -1,0 +1,6 @@
+[
+    {
+        "ParameterKey": "ServerName",
+        "ParameterValue": "$[taskcat_random-string]"
+    }
+]

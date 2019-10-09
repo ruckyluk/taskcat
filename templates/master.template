@@ -1,0 +1,21 @@
+Parameters:
+    ServerName:
+        Type: String
+        Description: The name of your server
+        Default: rucky-demo2
+
+
+Resources:
+  EC2instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      ImageId: ami-0810ee98967166c7d
+      InstanceType: t2.micro
+      KeyName: lukasrucky
+      SecurityGroupIds:
+        - sg-5d011027
+      AvailabilityZone: us-east-1a
+      Tags:
+        - 
+            Key: Name
+            Value: !Ref ServerName

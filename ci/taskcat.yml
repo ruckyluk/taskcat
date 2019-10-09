@@ -23,6 +23,3 @@
     template_file: master.template
     regions:
     - us-east-1
-  test-scenario2:
-    parameter_input: input2.json
-    template_file: master.template
